@@ -14,12 +14,12 @@ export const appRoutes: Routes = [
             { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'documentation', component: Documentation },
             { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') },
-            {
-    path: 'centres',
-    loadChildren: () =>
-        import('./app/Modification/features/centres/centres.module')
-        .then(m => m.CentresModule)
-}
+            {//t'ajoute ici comme ca tu peux faire le lien entre le menu et la route ensuite t ajoute le lien dans le menu dans layout/component/app.menu.ts
+                path: 'centres',
+                loadChildren: () =>
+                    import('./app/Modification/features/centres/centres.module')
+                        .then(m => m.CentresModule)
+            }
 
         ]
     },
