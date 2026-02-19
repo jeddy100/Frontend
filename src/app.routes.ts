@@ -5,6 +5,12 @@ import { Documentation } from './app/pages/documentation/documentation';
 import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 import { Inscription } from './app/Modification/component/inscription/inscription';
+import { Login } from './app/pages/auth/login';
+import { Login2 } from './app/Modification/component/login2/login2';
+import { Admin } from './app/Modification/component/admin/admin';
+import { RoleGuard } from './app/Modification/service/role-guard';
+import { Client } from './app/Modification/component/client/client';
+import { Boutique } from './app/Modification/component/boutique/boutique';
 
 export const appRoutes: Routes = [
     {
@@ -26,12 +32,35 @@ export const appRoutes: Routes = [
                 loadChildren: () =>
                     import('./app/Modification/features/utilisateur/utilisateur-module')
                         .then(m => m.UtilisateurModule)
-            }
+            },
+            {
+  path: 'admin',
+  component: Admin,
+  canActivate: [RoleGuard],
+  data: { role: 'admin' }
+},
+{
+  path: 'client',
+  component: Client,
+  canActivate: [RoleGuard],
+  data: { role: 'client' }
+},
+{
+  path: 'boutique',
+  component: Boutique,
+  canActivate: [RoleGuard],
+  data: { role: 'boutique' }
+}
+
 
         ]
     },
     { path: 'landing', component: Landing },
     { path: 'inscription', component: Inscription },
+    {
+  path: 'login2',
+  component: Login2
+},
     { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
     { path: '**', redirectTo: '/notfound' }
