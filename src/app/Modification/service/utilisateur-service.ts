@@ -44,6 +44,8 @@ export class UtilisateurService {
 
   logout() {
     localStorage.removeItem('token');
+        localStorage.removeItem('role');
+
   }
 
   isLoggedIn(): boolean {

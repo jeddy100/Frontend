@@ -25,11 +25,11 @@ ngOnInit(): void {
   this.loadUtilisateur();
 }
 
-loadUtilisateur(): void {
+loadUtilisateur(): void { 
  this.auth.getCurrentUser().subscribe({
     next: (res) => {
       console.log("REPONSE BACKEND :", res); // 👈 IMPORTANT
-      this.utilisateur = res;
+      this.utilisateur = res; 
       this.loading = false;
     },
     error: (err) => {

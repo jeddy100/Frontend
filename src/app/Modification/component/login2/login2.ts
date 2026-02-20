@@ -22,6 +22,7 @@ export class Login2 {
 
     constructor(private auth: UtilisateurService, private router: Router) {}
 
+// Méthode de connexion
     login() {
   this.auth.login(this.user).subscribe({
     next: (res) => {
@@ -38,6 +39,9 @@ export class Login2 {
     },
     error: () => alert('Erreur login')
   });
+
 }
+
+
 
 }

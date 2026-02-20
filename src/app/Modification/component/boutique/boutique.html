@@ -1,1 +1,28 @@
-<p>boutique works!</p>
+<div class="produit-container">
+  <p-card header="Ajouter un produit" class="produit-card">
+    
+    <div class="field">
+      <label>Désignation</label>
+      <input type="text" pInputText [(ngModel)]="designation" />
+    </div>
+
+    <div class="field">
+      <label>Type</label>
+      <input type="text" pInputText [(ngModel)]="type" />
+    </div>
+
+    <div class="field">
+      <label>Image</label>
+      <input type="file" (change)="onFileSelected($event)" />
+    </div>
+
+    <button pButton 
+            type="button" 
+            label="Ajouter" 
+            icon="pi pi-check"
+            (click)="addProduit()"
+            class="btn-ajouter">
+    </button>
+
+  </p-card>
+</div>

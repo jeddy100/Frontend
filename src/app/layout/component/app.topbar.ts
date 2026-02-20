@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AppConfigurator } from './app.configurator';
 import { LayoutService } from '@/app/layout/service/layout.service';
+import { UtilisateurService } from '@/app/Modification/service/utilisateur-service';
+
 
 @Component({
     selector: 'app-topbar',
@@ -72,9 +74,9 @@ import { LayoutService } from '@/app/layout/service/layout.service';
                         <i class="pi pi-inbox"></i>
                         <span>Messages</span>
                     </button>
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-user"></i>
-                        <span>Profile</span>
+                    <button type="button" (click)="logout()" class="layout-topbar-action">
+                        <i class="pi pi-sign-out"></i>
+                        <span>Logout</span>
                     </button>
                 </div>
             </div>
@@ -92,4 +94,13 @@ export class AppTopbar {
             darkTheme: !state.darkTheme
         }));
     }
+    constructor(
+    private auth: UtilisateurService,
+    private router: Router
+  ) {}
+
+   logout() {
+    this.auth.logout();
+    this.router.navigate(['/login2']);
+  }
 }
