@@ -1,17 +1,18 @@
 <div class="produit-container">
+
+  <!-- Formulaire d'ajout -->
   <p-card header="Ajouter un produit" class="produit-card">
-    
-    <div class="field">
+    <div class="form-field">
       <label>Désignation</label>
-      <input type="text" pInputText [(ngModel)]="designation" />
+      <input type="text" pInputText [(ngModel)]="designation" placeholder="Nom du produit"/>
     </div>
 
-    <div class="field">
+    <div class="form-field">
       <label>Type</label>
-      <input type="text" pInputText [(ngModel)]="type" />
+      <input type="text" pInputText [(ngModel)]="typeProduit" placeholder="Type du produit"/>
     </div>
 
-    <div class="field">
+    <div class="form-field">
       <label>Image</label>
       <input type="file" (change)="onFileSelected($event)" />
     </div>
@@ -23,6 +24,39 @@
             (click)="addProduit()"
             class="btn-ajouter">
     </button>
-
   </p-card>
+
+  <!-- Liste des produits -->
+  <div class="produits-list">
+    <h2>Liste des Produits</h2>
+    <p>Nombre de produits : {{ produits.length }}</p>
+
+    <div class="produits-grid">
+      <div *ngFor="let produit of produits" class="produit-card-list">
+        <img [src]="produit.image" alt="Image produit" class="produit-image"/>
+        <h3>{{ produit.designation }}</h3>
+        <p>Type : {{ produit.typeProduit }}</p>
+        <p *ngIf="produit.dernierPrix !== null">Dernier prix: {{ produit.dernierPrix }} €</p>
+    <p *ngIf="produit.dernierPrix === null">Aucun prix enregistré</p>
+        <button pButton type="button" label="Ajouter Prix"
+            icon="pi pi-plus"
+            (click)="openModal(produit)"></button>
+        <button pButton type="button" label="Supprimer" icon="pi pi-trash" class="btn-supprimer"
+                (click)="deleteProduit(produit._id)">
+        </button>
+        <!-- Modal pour ajouter prix -->
+<p-dialog header="Ajouter un prix" [(visible)]="displayModal" [modal]="true" [closable]="true">
+  <div class="field">
+    <label>Prix</label>
+    <input type="number" pInputText [(ngModel)]="prixAjoute"/>
+  </div>
+  <button pButton type="button" label="Enregistrer" (click)="ajouterPrix()"></button>
+</p-dialog>
+      </div>
+    </div>
+  </div>
+
 </div>
+<!-- <button pButton type="button" label="Supprimer" icon="pi pi-trash" class="btn-supprimer"
+                (click)="deleteProduit(produit._id)">
+        </button> -->

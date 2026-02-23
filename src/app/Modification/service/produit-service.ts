@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class ProduitService {
 
   private apiUrl = 'http://localhost:3000/produit';
+   private apiUrlPrix = 'http://localhost:3000/PrixVenteProduitParBoutique';
 
   constructor(private http: HttpClient) {}
 
@@ -18,4 +19,18 @@ export class ProduitService {
   getProduits(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
+
+  deleteProduit(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+   addPrix(produitId: string, prixVente: number) {
+    return this.http.post(this.apiUrlPrix, { produitId, prixVente });
+  }
+
+  // produit.service.ts
+getProduitsAvecPrix() {
+  return this.http.get<any>('http://localhost:3000/produit/with-prix');
+}
+
 }
