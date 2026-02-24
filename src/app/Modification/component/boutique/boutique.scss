@@ -67,4 +67,25 @@
   color: white;
   margin-top: 0.5rem;
 }
+.stock {
+  font-weight: bold;
+  padding: 6px;
+  border-radius: 6px;
+  margin: 6px 0;
+}
+
+.stock-ok {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.stock-zero {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.stock-negatif {
+  background-color: #ffebee;
+  color: #c62828;
+}
 

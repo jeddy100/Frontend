@@ -54,7 +54,7 @@ export class Boutique implements OnInit {
  loadProduits() {
   console.log("Avant API :", this.produits);
 
-  this.produitService.getProduitsAvecPrix().subscribe({
+  this.produitService.getProduitsAvecPrix2().subscribe({
     next: (res: any) => {
       console.log("Réponse API :", res.data);
       this.produits = res.data;
@@ -94,6 +94,43 @@ ajouterPrix() {
       error: err => console.error(err)
     });
 }
+
+// Pour ajouter une entrée de stock
+displayEntreeModal = false;
+produitSelectionne2: any = null;
+
+quantiteEntree: number = 0;
+prixUnitaireEntree: number = 0;
+
+openEntreeModal(produit: any) {
+  this.produitSelectionne2 = produit;
+  this.quantiteEntree = 0;
+  this.prixUnitaireEntree = 0;
+  this.displayEntreeModal = true;
+}
+
+ajouterEntree() {
+
+  if (!this.quantiteEntree || !this.prixUnitaireEntree) {
+    alert("Remplis tous les champs");
+    return;
+  }
+
+  this.produitService
+    .ajouterEntree(
+      this.produitSelectionne2._id,
+      this.quantiteEntree,
+      this.prixUnitaireEntree
+    )
+    .subscribe({
+      next: (res) => {
+        console.log("Entrée enregistrée", res);
+        this.displayEntreeModal = false;
+      },
+      error: (err) => console.error(err)
+    });
+}
+
 
 
 

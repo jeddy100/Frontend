@@ -38,13 +38,33 @@
         <p>Type : {{ produit.typeProduit }}</p>
         <p *ngIf="produit.dernierPrix !== null">Dernier prix: {{ produit.dernierPrix }} €</p>
     <p *ngIf="produit.dernierPrix === null">Aucun prix enregistré</p>
+    <p class="stock"
+   [ngClass]="{
+     'stock-ok': produit.stockActuel > 0,
+     'stock-zero': produit.stockActuel === 0,
+     'stock-negatif': produit.stockActuel < 0
+   }">
+  Stock : {{ produit.stockActuel }}
+</p>
         <button pButton type="button" label="Ajouter Prix"
             icon="pi pi-plus"
             (click)="openModal(produit)"></button>
+            <button pButton 
+        type="button" 
+        label="Entrée"
+        icon="pi pi-arrow-down"
+        class="btn-entree"
+        (click)="openEntreeModal(produit)">
+</button>
+
         <button pButton type="button" label="Supprimer" icon="pi pi-trash" class="btn-supprimer"
                 (click)="deleteProduit(produit._id)">
         </button>
-        <!-- Modal pour ajouter prix -->
+       
+      </div>
+    </div>
+  </div>
+   <!-- Modal pour ajouter prix -->
 <p-dialog header="Ajouter un prix" [(visible)]="displayModal" [modal]="true" [closable]="true">
   <div class="field">
     <label>Prix</label>
@@ -52,9 +72,31 @@
   </div>
   <button pButton type="button" label="Enregistrer" (click)="ajouterPrix()"></button>
 </p-dialog>
-      </div>
-    </div>
+<!-- Modal pour ajouter entrée -->
+ <p-dialog header="Entrée Produit"
+          [(visible)]="displayEntreeModal"
+          [modal]="true"
+          [closable]="true"
+          [style]="{width: '400px'}">
+
+  <div class="field">
+    <label>Quantité</label>
+    <input type="number" pInputText [(ngModel)]="quantiteEntree"/>
   </div>
+
+  <div class="field">
+    <label>Prix unitaire</label>
+    <input type="number" pInputText [(ngModel)]="prixUnitaireEntree"/>
+  </div>
+
+  <button pButton type="button"
+          label="Enregistrer"
+          icon="pi pi-check"
+          (click)="ajouterEntree()">
+  </button>
+
+</p-dialog>
+
 
 </div>
 <!-- <button pButton type="button" label="Supprimer" icon="pi pi-trash" class="btn-supprimer"

@@ -33,4 +33,22 @@ getProduitsAvecPrix() {
   return this.http.get<any>('http://localhost:3000/produit/with-prix');
 }
 
+
+
+  private apiUrlMouvementENtree = 'http://localhost:3000/mouvementProduit/entree';
+   ajouterEntree(produitId: string, quantite: number, prixUnitaire: number) {
+    return this.http.post(this.apiUrlMouvementENtree, {
+      produitId,
+      quantite,
+      prixUnitaire
+    });
+  }
+
+  getProduitsAvecPrix2() {
+  return this.http.get<any>('http://localhost:3000/produit/with-prix2');
+}
+
+
+  
+
 }
