@@ -1,1 +1,61 @@
-<p>client works!</p>
+<div class="dashboard-container">
+
+  <div class="dashboard-header">
+    <h1>Dashboard Client</h1>
+    <p>Bienvenue <strong>{{ utilisateur.username }}</strong></p>
+  </div>
+
+  <div class="dashboard-grid">
+
+    <div class="card">
+      <span class="card-label">Rôle</span>
+      <span class="card-value role">{{ utilisateur.type }}</span>
+    </div>
+
+    <div class="card solde-card">
+  <span class="card-label">Solde</span>
+
+  <div class="solde-row">
+    <span class="card-value solde">
+      {{ utilisateur.solde }} Ar
+    </span>
+
+    <button pButton 
+            type="button"
+            label="Recharger"
+            icon="pi pi-plus"
+            class="btn-recharge"
+            (click)="openRechargeModal()">
+    </button>
+  </div>
+</div>
+
+
+  </div>
+
+  <div class="section">
+    <h2>Activité récente</h2>
+    <p>Contenu à venir...</p>
+  </div>
+
+<p-dialog header="Recharger le solde"
+          [(visible)]="displayRechargeModal"
+          [modal]="true"
+          [style]="{width: '400px'}">
+
+  <div class="field">
+    <label>Montant</label>
+    <input type="number" pInputText [(ngModel)]="montantRecharge"/>
+  </div>
+
+  <button pButton
+          type="button"
+          label="Valider"
+          icon="pi pi-check"
+          (click)="rechargerSolde()">
+  </button>
+
+</p-dialog>
+
+</div>
+

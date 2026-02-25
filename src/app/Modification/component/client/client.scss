@@ -1,0 +1,91 @@
+/* Fond total blanc */
+body {
+  background-color: #ffffff;
+}
+
+.dashboard-container {
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 40px;
+}
+
+/* Header */
+.dashboard-header {
+  margin-bottom: 35px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #222;
+}
+
+.dashboard-header p {
+  margin-top: 6px;
+  color: #555;
+  font-size: 16px;
+}
+
+/* Grid responsive */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+/* Cartes */
+.card {
+  background: #fafafa;
+  padding: 28px;
+  border-radius: 14px;
+  border: 1px solid #f0f0f0;
+  transition: 0.25s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Textes */
+.card-label {
+  font-size: 14px;
+  color: #888;
+}
+
+.card-value {
+  display: block;
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+}
+
+.role {
+  color: #1565c0;
+}
+
+.solde {
+  color: #2e7d32;
+}
+
+/* Section future */
+.section {
+  background: #fafafa;
+  padding: 35px;
+  border-radius: 14px;
+  border: 1px solid #f0f0f0;
+}
+
+.solde-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.btn-recharge {
+  background-color: #2e7d32;
+  color: white;
+}
+
