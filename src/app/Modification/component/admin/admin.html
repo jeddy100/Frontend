@@ -1,13 +1,13 @@
 <div class="container">
-
   <h2>Dashboard Admin</h2>
 
-  <h2>Bienvenue {{ utilisateur.username }}</h2>
-  <p>Rôle : {{ utilisateur.type }}</p>
-  <p>Solde : {{ utilisateur.solde }}</p>
+  <div class="card mb-3 p-3">
+    <h3>Centre courant</h3>
+    <p><strong>ID centreCommercial :</strong> {{ currentCentreId || utilisateur?.idCentre || 'Aucun centre sélectionné' }}</p>
+  </div>
 
-
+  <h2>Bienvenue {{ utilisateur?.username }}</h2>
+  <p>Rôle : {{ utilisateur?.type }}</p>
+  <p>Solde : {{ utilisateur?.solde }}</p>
+  <p>Centre : {{ utilisateur?.idCentre }}</p>
 </div>
-
-
-

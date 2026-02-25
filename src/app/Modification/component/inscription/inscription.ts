@@ -14,12 +14,14 @@ import { Router } from '@angular/router';
   styleUrl: './inscription.scss',
 })
 export class Inscription {
-  newutilisateur = { username: '', password: '', type: 'admin' };
+  newutilisateur = { username: '', password: '', type: 'admin', idCentre: '' };
 
   constructor(private utilisateurService: UtilisateurService, private router: Router) {}
 
   addUtilisateur() {
     console.log('Bouton cliqué');
+    const currentCentreId = localStorage.getItem('currentCentreId');
+    this.newutilisateur.idCentre = currentCentreId || '';
     console.log(this.newutilisateur);
 
     this.utilisateurService.addUtilisateur(this.newutilisateur).subscribe({

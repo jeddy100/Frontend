@@ -26,37 +26,25 @@ export class AppMenu {
 
     ngOnInit() {
         const role = this.utilisateurService.getRole();
-        const currentCentreId = localStorage.getItem('currentCentreId');
 
         if (role === 'admin') {
-            this.model = [
-                {
-                    label: 'Gestion Centre commercial',
-                    items: [
-                        { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/admin'] },
-                        {
-                            label: 'Centres',
-                            icon: 'pi pi-building',
-                            routerLink: ['/centreCommercial'],
-                        },
-                        {
-                            label: 'Types de Bâtiment',
-                            icon: 'pi pi-tags',
-                            routerLink: ['/typebatiment'],
-                        },
-                        // N'afficher le menu Bâtiments que si un centre est connu
-                        ...(currentCentreId
-                            ? [
-                                  {
-                                      label: 'Bâtiments',
-                                      icon: 'pi pi-briefcase',
-                                      routerLink: ['/batiment', currentCentreId],
-                                  } as MenuItem,
-                              ]
-                            : []),
-                    ],
+            this.utilisateurService.getCurrentUser().subscribe({
+                next: (user) => {
+                    const centreId = user?.idCentre || localStorage.getItem('currentCentreId') || '';
+                    if (centreId) {
+                        localStorage.setItem('currentCentreId', centreId);
+                    }
+                    this.buildAdminMenu(
+                        centreId ? ['/batiment', centreId] : ['/centreCommercial']
+                    );
                 },
-            ];
+                error: () => {
+                    const centreId = localStorage.getItem('currentCentreId') || '';
+                    this.buildAdminMenu(
+                        centreId ? ['/batiment', centreId] : ['/centreCommercial']
+                    );
+                },
+            });
         } else if (role === 'boutique') {
             this.model = [
                 {
@@ -86,5 +74,46 @@ export class AppMenu {
         } else {
             this.model = [];
         }
+    }
+
+    private buildAdminMenu(batimentLink: any[]): void {
+        this.model = [
+            {
+                label: 'Espace admin',
+                items: [
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/admin'] },
+                ],
+            },
+            {
+                label: 'Structure du centre',
+                items: [
+                    {
+                        label: 'Centres',
+                        icon: 'pi pi-building',
+                        routerLink: ['/centreCommercial'],
+                    },
+                    {
+                        label: 'Types de Bâtiment',
+                        icon: 'pi pi-tags',
+                        routerLink: ['/typebatiment'],
+                    },
+                    {
+                        label: 'Bâtiments',
+                        icon: 'pi pi-briefcase',
+                        routerLink: batimentLink,
+                    },
+                ],
+            },
+            {
+                label: 'Gestion utilisateurs',
+                items: [
+                    {
+                        label: 'Utilisateurs',
+                        icon: 'pi pi-users',
+                        routerLink: ['/utilisateurs'],
+                    },
+                ],
+            },
+        ];
     }
 }
