@@ -1,0 +1,45 @@
+<p-toast></p-toast>
+
+<p-card header="Créer un bâtiment">
+  <form [formGroup]="batimentForm" (ngSubmit)="onSubmit()">
+    <div class="p-field">
+      <label for="designation">Désignation</label>
+      <input pInputText id="designation" formControlName="designation" placeholder="Entrez la désignation du bâtiment" />
+    </div>
+
+    <div class="p-field">
+      <label>Type de Bâtiment</label>
+      <p-select
+        formControlName="typebatiment"
+        [options]="typesBatiment"
+        optionLabel="designation"
+        optionValue="_id"
+        placeholder="Sélectionnez un type">
+      </p-select>
+    </div>
+
+    <div class="p-field">
+      <label for="nbrEtage">Nombre d'étages</label>
+      <p-inputNumber id="nbrEtage" formControlName="nbrEtage" [min]="1" placeholder="Nombre d'étages" />
+    </div>
+
+    <div class="p-field">
+      <label for="surfaceEtage">Surface par étage (m²)</label>
+      <p-inputNumber id="surfaceEtage" formControlName="surfaceEtage" [min]="0" placeholder="Surface par étage" />
+    </div>
+
+    <p-button
+      label="Créer Bâtiment"
+      type="submit"
+      [disabled]="!batimentForm.valid"
+      styleClass="p-button-success">
+    </p-button>
+
+    <p-button
+      label="Retour"
+      type="button"
+      (onClick)="goBack()"
+      styleClass="p-button-secondary">
+    </p-button>
+  </form>
+</p-card>

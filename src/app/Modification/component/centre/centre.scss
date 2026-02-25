@@ -1,0 +1,17 @@
+.p-field {
+  margin-bottom: 1rem;
+}
+
+.batiment-item {
+  border: 1px solid #e9ecef;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+}
+
+.batiment-item .p-field {
+  flex: 1;
+}

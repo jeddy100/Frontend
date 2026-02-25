@@ -1,1 +1,27 @@
-<h1>centre works!</h1>
+<p-toast></p-toast>
+
+<p-card header="Créer un nouveau centre commercial">
+  <form [formGroup]="centreForm" (ngSubmit)="onSubmit()">
+    <div class="p-field">
+      <label for="designation">Désignation</label>
+      <input pInputText id="designation" formControlName="designation" placeholder="Entrez la désignation du centre" />
+    </div>
+
+    <div class="p-field">
+      <label for="heure_ouverture">Heure d'ouverture</label>
+      <input pInputText id="heure_ouverture" formControlName="heure_ouverture" placeholder="Ex: 09:00" />
+    </div>
+
+    <div class="p-field">
+      <label for="heure_fermeture">Heure de fermeture</label>
+      <input pInputText id="heure_fermeture" formControlName="heure_fermeture" placeholder="Ex: 18:00" />
+    </div>
+
+    <p-button
+      label="Créer Centre"
+      type="submit"
+      [disabled]="!centreForm.valid"
+      styleClass="p-button-success">
+    </p-button>
+  </form>
+</p-card>

@@ -5,14 +5,16 @@ import { Documentation } from './app/pages/documentation/documentation';
 import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 import { Inscription } from './app/Modification/component/inscription/inscription';
-import { Login } from './app/pages/auth/login';
 import { Login2 } from './app/Modification/component/login2/login2';
 import { Admin } from './app/Modification/component/admin/admin';
 import { RoleGuard } from './app/Modification/service/role-guard';
 import { Client } from './app/Modification/component/client/client';
 import { Boutique } from './app/Modification/component/boutique/boutique';
+import { Centre } from './app/Modification/component/centre/centre';
+import { InitialSetupGuard } from './app/Modification/service/initial-setup-guard';
 
 export const appRoutes: Routes = [
+    { path: '', redirectTo: '/login2', pathMatch: 'full' },
     {
         path: '',
         component: AppLayout,
@@ -23,10 +25,18 @@ export const appRoutes: Routes = [
             { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') },
             //t'ajoute ici comme ca tu peux faire le lien entre le menu et la route ensuite t ajoute le lien dans le menu dans layout/component/app.menu.ts
              
-            {   path: 'centres',
+            {   path: 'centreCommercial',
                 loadChildren: () =>
                     import('./app/Modification/features/centres/centres.module')
                         .then(m => m.CentresModule)
+            },
+            { path: 'batiment/:centreId', loadChildren: () =>
+                import('./app/Modification/component/batiment/batiment.module')
+                    .then(m => m.BatimentModule)
+            },
+            { path: 'typebatiment', loadChildren: () =>
+                import('./app/Modification/component/typebatiment/typebatiment.module')
+                    .then(m => m.TypebatimentModule)
             },
              {   path: 'utilisateurs',
                 loadChildren: () =>
@@ -58,9 +68,14 @@ export const appRoutes: Routes = [
     { path: 'landing', component: Landing },
     { path: 'inscription', component: Inscription },
     {
-  path: 'login2',
-  component: Login2
-},
+        path: 'login2',
+        component: Login2,
+        canActivate: [InitialSetupGuard]
+    },
+    {
+        path: 'setup-centre',
+        component: Centre
+    },
     { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
     { path: '**', redirectTo: '/notfound' }
