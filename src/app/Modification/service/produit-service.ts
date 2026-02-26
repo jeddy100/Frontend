@@ -46,7 +46,19 @@ getProduitsAvecPrix() {
 
   getProduitsAvecPrix2() {
   return this.http.get<any>('http://localhost:3000/produit/with-prix2');
+
+  
 }
+
+getProduitsAvecPrixClient() {
+  return this.http.get<any>('http://localhost:3000/produit/with-prix-client');
+}
+
+  private apiUrlMouvementSortie = 'http://localhost:3000/mouvementProduit/achat';
+
+ acheterProduit(produitId: string, quantite: number,stockActuel: number) {
+    return this.http.post(`${this.apiUrlMouvementSortie}`, { produitId, quantite, stockActuel });
+  }
 
 
   

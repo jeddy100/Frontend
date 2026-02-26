@@ -11,6 +11,7 @@ import { Admin } from './app/Modification/component/admin/admin';
 import { RoleGuard } from './app/Modification/service/role-guard';
 import { Client } from './app/Modification/component/client/client';
 import { Boutique } from './app/Modification/component/boutique/boutique';
+import { ClientProduit } from './app/Modification/component/client-produit/client-produit';
 
 export const appRoutes: Routes = [
     {
@@ -42,6 +43,12 @@ export const appRoutes: Routes = [
 {
   path: 'client',
   component: Client,
+  canActivate: [RoleGuard],
+  data: { role: 'client' }
+},
+{
+  path: 'client-produit',
+  component: ClientProduit,
   canActivate: [RoleGuard],
   data: { role: 'client' }
 },
