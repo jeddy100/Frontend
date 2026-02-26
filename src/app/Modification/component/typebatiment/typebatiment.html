@@ -1,0 +1,30 @@
+<p-toast></p-toast>
+
+<p-card header="Gérer les types de bâtiment">
+  <form [formGroup]="typeForm" (ngSubmit)="onSubmit()" class="mb-4">
+    <div class="p-field">
+      <label for="designation">Désignation</label>
+      <input pInputText id="designation" formControlName="designation" placeholder="Entrez la désignation du type" />
+    </div>
+
+    <p-button
+      label="Créer Type"
+      type="submit"
+      [disabled]="!typeForm.valid"
+      styleClass="p-button-success">
+    </p-button>
+  </form>
+
+  <p-table [value]="typesBatiment" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Désignation</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-type>
+      <tr>
+        <td>{{ type.designation }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
