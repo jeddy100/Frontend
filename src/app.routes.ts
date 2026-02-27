@@ -13,6 +13,7 @@ import { Boutique } from './app/Modification/component/boutique/boutique';
 import { ClientProduit } from './app/Modification/component/client-produit/client-produit';
 import { Centre } from './app/Modification/component/centre/centre';
 import { InitialSetupGuard } from './app/Modification/service/initial-setup-guard';
+import { InscriptionClient } from './app/Modification/component/inscription-client/inscription-client';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: '/login2', pathMatch: 'full' },
@@ -74,6 +75,7 @@ export const appRoutes: Routes = [
     },
     { path: 'landing', component: Landing },
     { path: 'inscription', component: Inscription },
+    { path: 'inscription-client', component: InscriptionClient },
     {
         path: 'login2',
         component: Login2,

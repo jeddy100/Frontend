@@ -55,6 +55,7 @@ export class AppMenu {
                             icon: 'pi pi-fw pi-home',
                             routerLink: ['/boutique'],
                         },
+                        
                     ],
                 },
             ];
@@ -67,6 +68,11 @@ export class AppMenu {
                             label: 'Accueil Client',
                             icon: 'pi pi-fw pi-home',
                             routerLink: ['/client'],
+                        },
+                         {
+                            label: 'Achats',
+                            icon: 'pi pi-fw pi-shopping-cart',
+                            routerLink: ['/client-produit'],
                         },
                     ],
                 },
