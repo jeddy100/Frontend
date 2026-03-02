@@ -6,6 +6,7 @@ import { ClientService } from '../../service/client-service';
 import { Dialog } from "primeng/dialog";
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-client',
@@ -15,11 +16,11 @@ import { ButtonModule } from 'primeng/button';
 })
 export class Client implements OnInit {
 
-utilisateur : any;
+utilisateur: any = {};
   loading: boolean = true;
   error: string = '';
 
-  constructor(private auth: UtilisateurService, private router: Router, private transactionService: ClientService) {}
+  constructor(private auth: UtilisateurService, private cd: ChangeDetectorRef, private router: Router, private transactionService: ClientService) {}
 
 
   ngOnInit(): void {
@@ -27,11 +28,14 @@ utilisateur : any;
 }
 
 loadUtilisateur(): void { 
- this.auth.getCurrentUser().subscribe({
+   console.log("LOAD UTILISATEUR APPELE");
+
+  this.auth.getCurrentUser().subscribe({
     next: (res) => {
       console.log("REPONSE BACKEND :", res);
       this.utilisateur = res; 
       this.loading = false;
+      this.cd.detectChanges();
     },
     error: (err) => {
       console.log("ERREUR :", err);
