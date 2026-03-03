@@ -1,45 +1,189 @@
 <p-toast></p-toast>
 
-<p-card header="Créer un bâtiment">
-  <form [formGroup]="batimentForm" (ngSubmit)="onSubmit()">
+<p-card header="Gérer les bâtiments">
+  <!-- Formulaire de création -->
+  <form [formGroup]="batimentForm" (ngSubmit)="onSubmit()" class="creation-form">
+    <h3 class="form-title">Créer un nouveau bâtiment</h3>
+    
     <div class="p-field">
       <label for="designation">Désignation</label>
-      <input pInputText id="designation" formControlName="designation" placeholder="Entrez la désignation du bâtiment" />
+      <input 
+        pInputText 
+        id="designation" 
+        formControlName="designation" 
+        placeholder="Ex: Grand magasin, Boutique, Restaurant..." 
+      />
+      <small 
+        *ngIf="batimentForm.get('designation')?.invalid && batimentForm.get('designation')?.touched" 
+        class="p-error">
+        La désignation est requise
+      </small>
     </div>
 
-    <div class="p-field">
-      <label>Type de Bâtiment</label>
-      <p-select
-        formControlName="typebatiment"
-        [options]="typesBatiment"
-        optionLabel="designation"
-        optionValue="_id"
-        placeholder="Sélectionnez un type">
-      </p-select>
+      <div class="p-field">
+        <label>Type de Bâtiment</label>
+        <p-select
+          formControlName="typebatiment"
+          [options]="typesBatiment"
+          optionLabel="designation"
+          optionValue="_id"
+          placeholder="Sélectionnez un type">
+        </p-select>
+        <small 
+          *ngIf="batimentForm.get('typebatiment')?.invalid && batimentForm.get('typebatiment')?.touched" 
+          class="p-error">
+          Le type de bâtiment est requis
+        </small>
+      </div>
+
+    <div class="form-row">
+      <div class="p-field">
+        <label for="nbrEtage">Nombre d'étages</label>
+        <p-inputNumber 
+          id="nbrEtage" 
+          formControlName="nbrEtage" 
+          [min]="1" 
+          placeholder="Ex: 2">
+        </p-inputNumber>
+      </div>
+
+      <div class="p-field">
+        <label for="surfaceEtage">Surface par étage (m²)</label>
+        <p-inputNumber 
+          id="surfaceEtage" 
+          formControlName="surfaceEtage" 
+          [min]="0" 
+          placeholder="Ex: 500">
+        </p-inputNumber>
+      </div>
     </div>
 
-    <div class="p-field">
-      <label for="nbrEtage">Nombre d'étages</label>
-      <p-inputNumber id="nbrEtage" formControlName="nbrEtage" [min]="1" placeholder="Nombre d'étages" />
+    <div class="button-group">
+      <p-button
+        type="submit"
+        [disabled]="!batimentForm.valid || loading"
+        styleClass="p-button-success">
+        <i class="pi pi-plus" style="margin-right: 0.5rem"></i>
+        Créer le bâtiment
+      </p-button>
+
+      <p-button
+        label="Retour aux centres"
+        type="button"
+        (onClick)="goBack()"
+        styleClass="p-button-secondary">
+        <i class="pi pi-arrow-left" style="margin-right: 0.5rem"></i>
+        Retour
+      </p-button>
     </div>
-
-    <div class="p-field">
-      <label for="surfaceEtage">Surface par étage (m²)</label>
-      <p-inputNumber id="surfaceEtage" formControlName="surfaceEtage" [min]="0" placeholder="Surface par étage" />
-    </div>
-
-    <p-button
-      label="Créer Bâtiment"
-      type="submit"
-      [disabled]="!batimentForm.valid"
-      styleClass="p-button-success">
-    </p-button>
-
-    <p-button
-      label="Retour"
-      type="button"
-      (onClick)="goBack()"
-      styleClass="p-button-secondary">
-    </p-button>
   </form>
+
+  <!-- Section liste des bâtiments -->
+  <div class="liste-section">
+    <h3 class="section-title">
+      <i class="pi pi-building" style="margin-right: 0.5rem"></i>
+      Liste des bâtiments du centre
+    </h3>
+
+    <!-- Loader -->
+    <div *ngIf="loadingList" class="loader-container">
+      <i class="pi pi-spin pi-spinner"></i>
+      <span>Chargement des bâtiments...</span>
+    </div>
+
+    <!-- Tableau des bâtiments -->
+    <p-table 
+      *ngIf="!loadingList" 
+      [value]="batiments" 
+      [paginator]="true" 
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} bâtiments"
+      styleClass="p-datatable-striped">
+      
+      <ng-template pTemplate="caption">
+        <div class="caption-header">
+          <span class="caption-title">Bâtiments du centre</span>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input 
+              pInputText 
+              type="text" 
+              placeholder="Rechercher un bâtiment..." 
+              (input)="onSearch($event)"
+            />
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Désignation</th>
+          <th>Type</th>
+          <th>Étages</th>
+          <th>Surface totale</th>
+          <th style="width: 100px">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-batiment>
+        <tr>
+          <td data-label="Désignation">{{ batiment.designation }}</td>
+          <td data-label="Type">{{ getTypeDesignation(batiment) }}</td>
+          <td data-label="Étages">{{ batiment.nbrEtage }}</td>
+          <td data-label="Surface totale">{{ batiment.nbrEtage * batiment.surfaceEtage }} m²</td>
+          <td>
+            <div class="action-buttons">
+              <p-button 
+                icon="pi pi-trash" 
+                styleClass="p-button-rounded p-button-text p-button-danger"
+                (onClick)="confirmDelete(batiment)"
+                pTooltip="Supprimer">
+              </p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5">
+            <div class="empty-state">
+              <i class="pi pi-building"></i>
+              <h3>Aucun bâtiment</h3>
+              <p>Ce centre commercial n'a pas encore de bâtiment</p>
+              <p-button 
+                label="Créer un bâtiment" 
+                icon="pi pi-plus"
+                styleClass="p-button-outlined"
+                (onClick)="scrollToForm()">
+              </p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </p-card>
+
+<!-- PAR CE CODE CORRIGÉ -->
+<p-confirmDialog #cd>
+  <ng-template pTemplate="header">
+    <h3>Confirmer la suppression</h3>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Non" 
+      icon="pi pi-times" 
+      (onClick)="cd.onReject()" 
+      styleClass="p-button-text">
+    </p-button>
+    <p-button 
+      label="Oui" 
+      icon="pi pi-check" 
+      (onClick)="cd.onAccept()"
+      styleClass="p-button-danger">
+    </p-button>
+  </ng-template>
+</p-confirmDialog>
