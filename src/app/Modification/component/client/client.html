@@ -33,9 +33,26 @@
 
   </div>
 
-  <div class="section">
+   <div class="section">
     <h2>Activité récente</h2>
-    <p>Contenu à venir...</p>
+
+    <div *ngIf="achatsRecents.length > 0; else aucunAchat" class="achats-grid">
+      <div *ngFor="let achat of achatsRecents" class="achat-card">
+        <div class="achat-header">
+          <span class="achat-produit">{{ achat.produit?.designation || achat.produitId }}</span>
+          <span class="achat-date">{{ achat.dateMouvement | date:'short' }}</span>
+        </div>
+        <div class="achat-details">
+          <span>Quantité : <strong>{{ achat.quantite }}</strong></span>
+          <span>Prix unitaire : <strong>{{ achat.prixUnitaire | number }} Ar</strong></span>
+          <span>Total : <strong>{{ achat.quantite * achat.prixUnitaire | number }} Ar</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #aucunAchat>
+      <p class="no-achat">Vous n'avez effectué aucun achat récent.</p>
+    </ng-template>
   </div>
 
 <p-dialog header="Recharger le solde"
