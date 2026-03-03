@@ -16,7 +16,7 @@ import { ClientProduit } from './app/Modification/component/client-produit/clien
 import { LandingModif } from './app/Modification/component/landing/landing';
 
 export const appRoutes: Routes = [
-    { path: '', redirectTo: '/landing2', pathMatch: 'full' },
+    { path: '', redirectTo: '/landing', pathMatch: 'full' },
     {
         path: '',
         component: AppLayout,
@@ -73,7 +73,7 @@ export const appRoutes: Routes = [
 
         ]
     },
-    { path: 'landing', component: Landing },
+    { path: 'landing', component: LandingModif },
     { path: 'landing2', component: LandingModif },
 
     { path: 'inscription', component: Inscription },
