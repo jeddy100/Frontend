@@ -6,12 +6,14 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
 import { authInterceptor} from './app/Modification/interceptor/auth-interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(appRoutes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
         provideHttpClient(withFetch()),
         provideZonelessChangeDetection(),
+        provideAnimations(),
          provideHttpClient(
       withInterceptors([authInterceptor])
     ),

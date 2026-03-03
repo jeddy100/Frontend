@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root',
 })
 export class ClientService {
-   private apiUrl = 'http://localhost:3000/transactionSolde';
+   private apiUrl = 'https://meanproject-2.onrender.com/transactionSolde';
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class ClientService {
 
 
   // client-service.ts
-private apiUrlMouvementSortie = 'http://localhost:3000/mouvementProduit/achat';
+private apiUrlMouvementSortie = 'https://meanproject-2.onrender.com/mouvementProduit/achat';
 
 getAchatsClientById(): Observable<any[]> {
   return this.http.get<any[]>(`${this.apiUrlMouvementSortie}`);

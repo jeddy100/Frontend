@@ -12,9 +12,11 @@ import { Client } from './app/Modification/component/client/client';
 import { Boutique } from './app/Modification/component/boutique/boutique';
 import { Centre } from './app/Modification/component/centre/centre';
 import { InitialSetupGuard } from './app/Modification/service/initial-setup-guard';
+import { ClientProduit } from './app/Modification/component/client-produit/client-produit';
+import { LandingModif } from './app/Modification/component/landing/landing';
 
 export const appRoutes: Routes = [
-    { path: '', redirectTo: '/login2', pathMatch: 'full' },
+    { path: '', redirectTo: '/landing2', pathMatch: 'full' },
     {
         path: '',
         component: AppLayout,
@@ -56,6 +58,12 @@ export const appRoutes: Routes = [
   data: { role: 'client' }
 },
 {
+  path: 'client-produit',
+  component: ClientProduit,
+  canActivate: [RoleGuard],
+  data: { role: 'client' }
+},
+{
   path: 'boutique',
   component: Boutique,
   canActivate: [RoleGuard],
@@ -66,6 +74,8 @@ export const appRoutes: Routes = [
         ]
     },
     { path: 'landing', component: Landing },
+    { path: 'landing2', component: LandingModif },
+
     { path: 'inscription', component: Inscription },
     {
         path: 'login2',

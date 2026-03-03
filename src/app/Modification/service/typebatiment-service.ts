@@ -24,8 +24,7 @@ export interface ApiResponse {
   providedIn: 'root',
 })
 export class TypeBatimentService {
-
-  private apiUrl = 'http://localhost:3000/typeBatiment'; // Adapter selon l'API
+ private apiUrl = 'https://meanproject-2.onrender.com/typeBatiment'; // Adapter selon l'API
 
   constructor(private http: HttpClient) {}
 
@@ -36,4 +35,5 @@ export class TypeBatimentService {
   getTypeBatiments(): Observable<TypeBatimentModel[]> {
     return this.http.get<TypeBatimentModel[]>(this.apiUrl);
   }
+ 
 }

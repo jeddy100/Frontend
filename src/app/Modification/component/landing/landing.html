@@ -1,0 +1,68 @@
+<div class="landing-container">
+
+  <!-- NAVBAR FIXE -->
+  <nav class="navbar">
+    <div class="logo">MallManager</div>
+
+    <div class="nav-buttons">
+      <button pButton label="Connexion"
+              class="nav-btn"
+              (click)="goToLogin()">
+      </button>
+
+      <button pButton label="Inscription"
+              class="nav-btn-outline"
+              (click)="goToRegister()">
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="overlay"></div>
+
+    <div class="hero-content" @fadeUp>
+      <h1>Plateforme Intelligente de Gestion Commerciale</h1>
+      <p>
+        Centralisez la gestion des boutiques, produits, stocks,
+        achats clients et transactions en toute simplicité.
+      </p>
+
+      <div class="hero-buttons">
+        <button pButton label="Commencer"
+                icon="pi pi-arrow-right"
+                class="btn-primary"
+                (click)="goToRegister()">
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+
+    <div class="feature-card" @fadeUp>
+      <i class="pi pi-building feature-icon"></i>
+      <h3>Administration</h3>
+      <p>Gestion complète des centres, boutiques et utilisateurs.</p>
+    </div>
+
+    <div class="feature-card" @fadeUp>
+      <i class="pi pi-shopping-cart feature-icon"></i>
+      <h3>Boutiques</h3>
+      <p>Gestion des produits, prix, stock et suivi des ventes.</p>
+    </div>
+
+    <div class="feature-card" @fadeUp>
+      <i class="pi pi-wallet feature-icon"></i>
+      <h3>Clients</h3>
+      <p>Recharge du solde, achats sécurisés et historique complet.</p>
+    </div>
+
+  </section>
+
+  <footer class="footer">
+    © 2026 - MallManager | Tous droits réservés
+  </footer>
+
+</div>

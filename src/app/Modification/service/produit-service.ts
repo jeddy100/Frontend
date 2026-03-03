@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class ProduitService {
 
-  private apiUrl = 'http://localhost:3000/produit';
-   private apiUrlPrix = 'http://localhost:3000/PrixVenteProduitParBoutique';
+  private apiUrl = 'https://meanproject-2.onrender.com/produit';
+   private apiUrlPrix = 'https://meanproject-2.onrender.com/PrixVenteProduitParBoutique';
 
   constructor(private http: HttpClient) {}
 
@@ -30,12 +30,12 @@ export class ProduitService {
 
   // produit.service.ts
 getProduitsAvecPrix() {
-  return this.http.get<any>('http://localhost:3000/produit/with-prix');
+  return this.http.get<any>('https://meanproject-2.onrender.com/produit/with-prix');
 }
 
 
 
-  private apiUrlMouvementENtree = 'http://localhost:3000/mouvementProduit/entree';
+  private apiUrlMouvementENtree = 'https://meanproject-2.onrender.com/mouvementProduit/entree';
    ajouterEntree(produitId: string, quantite: number, prixUnitaire: number) {
     return this.http.post(this.apiUrlMouvementENtree, {
       produitId,
@@ -45,16 +45,16 @@ getProduitsAvecPrix() {
   }
 
   getProduitsAvecPrix2() {
-  return this.http.get<any>('http://localhost:3000/produit/with-prix2');
+  return this.http.get<any>('https://meanproject-2.onrender.com/produit/with-prix2');
 
   
 }
 
 getProduitsAvecPrixClient() {
-  return this.http.get<any>('http://localhost:3000/produit/with-prix-client');
+  return this.http.get<any>('https://meanproject-2.onrender.com/produit/with-prix-client');
 }
 
-  private apiUrlMouvementSortie = 'http://localhost:3000/mouvementProduit/achat';
+  private apiUrlMouvementSortie = 'https://meanproject-2.onrender.com/mouvementProduit/achat';
 
  acheterProduit(produitId: string, quantite: number,stockActuel: number) {
     return this.http.post(`${this.apiUrlMouvementSortie}`, { produitId, quantite, stockActuel });
