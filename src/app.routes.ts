@@ -12,6 +12,7 @@ import { Client } from './app/Modification/component/client/client';
 import { Boutique } from './app/Modification/component/boutique/boutique';
 import { Centre } from './app/Modification/component/centre/centre';
 import { InitialSetupGuard } from './app/Modification/service/initial-setup-guard';
+import { ClientProduit } from './app/Modification/component/client-produit/client-produit';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: '/login2', pathMatch: 'full' },
@@ -52,6 +53,12 @@ export const appRoutes: Routes = [
 {
   path: 'client',
   component: Client,
+  canActivate: [RoleGuard],
+  data: { role: 'client' }
+},
+{
+  path: 'client-produit',
+  component: ClientProduit,
   canActivate: [RoleGuard],
   data: { role: 'client' }
 },
