@@ -1,30 +1,93 @@
+<!-- typebatiment.html -->
 <p-toast></p-toast>
 
 <p-card header="Gérer les types de bâtiment">
-  <form [formGroup]="typeForm" (ngSubmit)="onSubmit()" class="mb-4">
+  <!-- Formulaire moderne -->
+  <form [formGroup]="typeForm" (ngSubmit)="onSubmit()">
     <div class="p-field">
       <label for="designation">Désignation</label>
-      <input pInputText id="designation" formControlName="designation" placeholder="Entrez la désignation du type" />
+      <input 
+        pInputText 
+        id="designation" 
+        formControlName="designation" 
+        placeholder="Ex: Grands magasins, Restaurants, etc." 
+      />
+      <small 
+        *ngIf="typeForm.get('designation')?.invalid && typeForm.get('designation')?.touched" 
+        class="p-error">
+        La désignation est requise
+      </small>
     </div>
 
     <p-button
-      label="Créer Type"
+      label="Créer un type"
       type="submit"
-      [disabled]="!typeForm.valid"
+      [disabled]="!typeForm.valid || loading"
       styleClass="p-button-success">
     </p-button>
   </form>
 
-  <p-table [value]="typesBatiment" [paginator]="true" [rows]="10">
+  <!-- Loader moderne -->
+  <div *ngIf="loading" class="loader-container">
+    <i class="pi pi-spin pi-spinner"></i>
+    <span>Chargement des types de bâtiments...</span>
+  </div>
+
+  <!-- Tableau moderne -->
+  <p-table 
+    *ngIf="!loading" 
+    [value]="typesBatiment" 
+    [paginator]="true" 
+    [rows]="10"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} types"
+    [loading]="loading">
+    
+    <ng-template pTemplate="caption">
+      <div class="caption-content">
+        <span class="caption-title">Liste des types de bâtiments</span>
+      </div>
+    </ng-template>
+
     <ng-template pTemplate="header">
       <tr>
         <th>Désignation</th>
       </tr>
     </ng-template>
+
     <ng-template pTemplate="body" let-type>
       <tr>
-        <td>{{ type.designation }}</td>
+        <td data-label="Désignation">{{ type.designation }}</td>
       </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="1">
+          <div class="empty-state">
+            <i class="pi pi-building"></i>
+            <h3>Aucun type de bâtiment</h3>
+            <p>Commencez par créer votre premier type de bâtiment</p>
+            <p-button 
+              label="Créer maintenant" 
+              icon="pi pi-plus"
+              styleClass="p-button-outlined"
+              (onClick)="scrollToForm()">
+            </p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="paginatorleft">
+      <p-button 
+        *ngIf="typesBatiment.length > 0" 
+        icon="pi pi-refresh" 
+        styleClass="p-button-text" 
+        (onClick)="loadTypesBatiment()"
+        pTooltip="Actualiser la liste">
+      </p-button>
     </ng-template>
   </p-table>
 </p-card>

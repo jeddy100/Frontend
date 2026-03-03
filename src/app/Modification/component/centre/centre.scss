@@ -1,17 +1,140 @@
-.p-field {
-  margin-bottom: 1rem;
+// centre.scss
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:host {
+  --primary: #2c3e50;
+  --secondary: #3498db;
+  --accent: #e67e22;
+  --light: #f8f9fa;
+  --dark: #1e2b37;
+  --success: #27ae60;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+  --text: #34495e;
+  --text-light: #7f8c8d;
+  --border: #ecf0f1;
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --transition: all 0.2s ease;
+  
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  display: block;
+  padding: 1.5rem;
 }
 
-.batiment-item {
-  border: 1px solid #e9ecef;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 4px;
-  display: flex;
-  gap: 1rem;
-  align-items: end;
+// Carte principale
+::ng-deep .p-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: none;
+  transition: var(--transition);
+  
+  &:hover {
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .p-card-header {
+    padding: 1.5rem 1.5rem 0.5rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--dark);
+    letter-spacing: -0.01em;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .p-card-body {
+    padding: 1.5rem;
+  }
 }
 
-.batiment-item .p-field {
-  flex: 1;
+// Formulaire moderne
+form {
+  background: var(--light);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  
+  .p-field {
+    margin-bottom: 1.5rem;
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      font-size: 0.875rem;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    
+    input[pInputText] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      transition: var(--transition);
+      background: white;
+      
+      &:hover {
+        border-color: var(--secondary);
+      }
+      
+      &:focus {
+        outline: none;
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      }
+      
+      &::placeholder {
+        color: var(--text-light);
+        font-weight: 300;
+      }
+    }
+  }
+  
+  // Bouton
+  .p-button.p-button-success {
+    background: var(--secondary);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 2rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: var(--transition);
+    
+    &:hover:not(:disabled) {
+      background: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .p-button-label {
+      font-weight: 500;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  :host {
+    padding: 0.5rem;
+  }
+  
+  form {
+    padding: 1rem;
+    
+    .p-button {
+      width: 100%;
+    }
+  }
 }

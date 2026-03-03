@@ -8,6 +8,18 @@ export interface TypeBatimentModel {
   designation: string;
 }
 
+export interface ApiResponse {
+  status: number;
+  message: string;
+  data: {
+    content: TypeBatimentModel[];
+    totalElements?: number;
+    totalPages?: number;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })

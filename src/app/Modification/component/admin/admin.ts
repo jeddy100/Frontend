@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilisateurService } from '../../service/utilisateur-service';
 import { CommonModule } from '@angular/common';
@@ -11,11 +11,11 @@ import { CommonModule } from '@angular/common';
 })
 export class Admin implements OnInit {
   utilisateur: any;
-  loading: boolean = false;
+  loading: boolean = true;
   error: string = '';
   currentCentreId: string | null = null;
 
-  constructor(private auth: UtilisateurService, private router: Router,  private cd: ChangeDetectorRef) {}
+  constructor(private auth: UtilisateurService, private router: Router) {}
 
   ngOnInit(): void {
     this.currentCentreId = localStorage.getItem('currentCentreId');
@@ -27,7 +27,6 @@ export class Admin implements OnInit {
       next: (res) => {
         console.log('REPONSE BACKEND :', res);
         this.utilisateur = res;
-                this.cd.detectChanges();
         this.loading = false;
       },
       error: (err) => {
