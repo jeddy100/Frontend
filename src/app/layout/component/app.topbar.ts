@@ -12,27 +12,70 @@ import { UtilisateurService } from '@/app/Modification/service/utilisateur-servi
     standalone: true,
     imports: [RouterModule, CommonModule, StyleClassModule],
     template: ` <div class="layout-topbar">
-        <div class="layout-topbar-logo-container">
-            <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()">
-                <i class="pi pi-bars"></i>
-            </button>
-        </div>
+    <div class="layout-topbar-logo-container">
 
-        <div class="layout-topbar-actions">
-            <button class="layout-topbar-menu-button layout-topbar-action" pStyleClass="@next" enterFromClass="hidden" enterActiveClass="animate-scalein" leaveToClass="hidden" leaveActiveClass="animate-fadeout" [hideOnOutsideClick]="true">
-                <i class="pi pi-ellipsis-v"></i>
-            </button>
+        <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()">
+            <i class="pi pi-bars"></i>
+        </button>
 
-            <div class="layout-topbar-menu hidden lg:block">
-                <div class="layout-topbar-menu-content">
-                    <button type="button" (click)="logout()" class="layout-topbar-action">
-                        <i class="pi pi-sign-out"></i>
-                        <span>Logout</span>
-                    </button>
-                </div>
+        <!-- Nom de l'application -->
+        <span class="app-title">
+            m1p13mean-Jeddy-Famenontsoa
+        </span>
+
+    </div>
+
+    <div class="layout-topbar-actions">
+        <button class="layout-topbar-menu-button layout-topbar-action"
+            pStyleClass="@next"
+            enterFromClass="hidden"
+            enterActiveClass="animate-scalein"
+            leaveToClass="hidden"
+            leaveActiveClass="animate-fadeout"
+            [hideOnOutsideClick]="true">
+
+            <i class="pi pi-ellipsis-v"></i>
+        </button>
+
+        <div class="layout-topbar-menu hidden lg:block">
+            <div class="layout-topbar-menu-content">
+                <button type="button" (click)="logout()" class="layout-topbar-action">
+                    <i class="pi pi-sign-out"></i>
+                    <span>Logout</span>
+                </button>
             </div>
         </div>
-    </div>`
+    </div>
+</div>`,
+styles: [
+        `
+           .layout-topbar {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.layout-topbar-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.app-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4f46e5; /* violet moderne */
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.app-title:hover {
+    color: #3730a3;
+    transform: translateY(-1px);
+}
+        `
+    ]
 })
 export class AppTopbar {
     items!: MenuItem[];
