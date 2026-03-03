@@ -1,6 +1,8 @@
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+
 
 export interface TypeBatimentModel {
   _id?: string;
@@ -9,12 +11,13 @@ export interface TypeBatimentModel {
 
 export interface BatimentModel {
   _id?: string;
-  id?: string;
   designation: string;
-  centrecommercial: string; // ID du centre
-  typebatiment: string; // ID du type
+  typebatiment: string | TypeBatimentModel;
   nbrEtage: number;
   surfaceEtage: number;
+  centrecommercial: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 @Injectable({
@@ -22,7 +25,7 @@ export interface BatimentModel {
 })
 export class BatimentService {
 
-  private apiUrl = 'http://localhost:3000/batiments'; // Adapter selon l'API
+  private apiUrl = 'http://localhost:3000/batiment'; // Adapter selon l'API
 
   constructor(private http: HttpClient) {}
 
@@ -31,6 +34,28 @@ export class BatimentService {
   }
 
   getBatimentsByCentre(centreId: string): Observable<BatimentModel[]> {
-    return this.http.get<BatimentModel[]>(`${this.apiUrl}?centrecommercial=${centreId}`);
+    // Utilisation du query parameter
+    return this.http.get<any>(`${this.apiUrl}?centrecommercial=${centreId}`).pipe(
+      map(response => {
+        console.log('Réponse brute:', response);
+        
+        if (response.data && response.data.content) {
+          return response.data.content;
+        } else if (response.data) {
+          return response.data;
+        } else if (Array.isArray(response)) {
+          return response;
+        }
+        return [];
+      })
+    );
+  }
+
+  getBatimentsByCentrePaginated(centreId: string, page: number = 0, size: number = 10): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?centrecommercial=${centreId}&page=${page}&size=${size}`);
+  }
+
+  deleteBatiment(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }
