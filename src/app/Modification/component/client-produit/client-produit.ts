@@ -22,6 +22,12 @@ import { Dialog } from "primeng/dialog";
 })
 export class ClientProduit {
   produits: any[] = [];
+filteredProduits: any[] = [];
+searchTerm: string = '';
+currentPage: number = 1;
+itemsPerPage: number = 6;
+totalPages: number = 0;
+
   utilisateur: any = null;
   loading: boolean = true;
   layout: 'list' | 'grid' = 'grid';
@@ -43,11 +49,60 @@ export class ClientProduit {
       next: (res: any) => {
         console.log("REPONSE BACKEND :", res);
         this.produits = res.data;
+              this.filteredProduits = res.data; // copie initiale pour le filtrage
+                    this.calculateTotalPages();
+
         this.cd.detectChanges();
       },
       error: (err) => console.error(err)
     });
   }
+  /// Pagination
+
+calculateTotalPages() {
+  this.totalPages = Math.ceil(
+    this.filteredProduits.length / this.itemsPerPage
+  );
+  
+}
+get paginatedProduits() {
+  const start = (this.currentPage - 1) * this.itemsPerPage;
+  return this.filteredProduits.slice(start, start + this.itemsPerPage);
+}
+goToPage(page: number) {
+  this.currentPage = page;
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+  }
+}
+
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+  }
+}
+
+  /// Filtrage des produits côté client
+  search() {
+  const term = this.searchTerm.toLowerCase().trim();
+  this.currentPage = 1;
+this.calculateTotalPages();
+
+  if (!term) {
+    this.filteredProduits = this.produits;
+    console.log("Term vide, affichage de tous les produits");
+    return;
+  }
+  console.log("Recherche avec le terme :", term);
+
+  this.filteredProduits = this.produits.filter(produit =>
+    produit.designation?.toLowerCase().includes(term) ||
+    produit.typeProduit?.toLowerCase().includes(term)
+  );
+}
 
  getSeverity(produit: any):
   'success' | 'warn' | 'danger' {
@@ -72,7 +127,7 @@ export class ClientProduit {
   displayAchatModal: boolean = false;
 
 produitSelectionne: any = null;
-quantite: number = 1;
+quantite: number = 0;
 soldeInsuffisant: boolean = false;
   stockInsuffisant: boolean = false;
 
@@ -95,7 +150,7 @@ soldeInsuffisant: boolean = false;
   openAchatModal(produit: any) {
     this.produitSelectionne = produit;
         this.stockInsuffisant = false;
-    this.quantite = 1;
+    this.quantite = 0;
     this.soldeInsuffisant = false;
     this.displayAchatModal = true;
     this.cd.detectChanges();
