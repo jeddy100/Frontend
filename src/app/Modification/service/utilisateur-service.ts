@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class UtilisateurService {
 
-  private apiUrl = 'http://localhost:3000/utilisateur'; //port
+  private apiUrl = 'https://meanproject-2.onrender.com/utilisateur'; //port
 
   constructor(private http: HttpClient) {}
 
@@ -60,7 +60,7 @@ getRole() {
   return localStorage.getItem('role');
 }
 getCurrentUser() {
-  return this.http.get<any>('http://localhost:3000/me');
+  return this.http.get<any>('https://meanproject-2.onrender.com/me');
 }
 
 
